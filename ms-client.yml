@@ -1,0 +1,78 @@
+# Configuration centralisee commune du microservice ms-client.
+# Ce fichier est servi par ms-config pour la requete :
+# /ms-client/default
+#
+# Il contient la base commune a tous les profils.
+
+server:
+  # Port HTTP du microservice client.
+  port: 8081
+
+spring:
+  application:
+    # Rappel du nom du service.
+    name: ms-client
+
+  datasource:
+    # Connexion PostgreSQL.
+    # Base demandee : dbclient
+    #
+    # Valeurs par defaut en local :
+    # - host : localhost
+    # - port : 5432
+    # - database : dbclient
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:dbclient}
+
+    # Identifiants de connexion a PostgreSQL.
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+    # Driver JDBC PostgreSQL.
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      # En environnement de developpement simple, update cree/ajuste
+      # les tables automatiquement selon les entites JPA.
+      ddl-auto: update
+
+    # Affiche les requetes SQL dans les logs.
+    show-sql: true
+
+    properties:
+      hibernate:
+        # Dialecte adapte a PostgreSQL.
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+        # Formate le SQL dans les logs pour le rendre lisible.
+        format_sql: true
+
+  sql:
+    init:
+      # Desactive l'initialisation SQL auto tant qu'aucun script
+      # schema.sql / data.sql n'est fourni.
+      mode: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # Endpoints utiles pour supervision et tests.
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+  health:
+    probes:
+      enabled: true
+
+logging:
+  level:
+    # Niveau global raisonnable pour le developpement.
+    root: INFO
+
+    # Affiche les requetes SQL Hibernate.
+    org.hibernate.SQL: DEBUG
+
+    # Affiche les parametres SQL lies aux requetes.
+    org.hibernate.orm.jdbc.bind: TRACE
