@@ -13,3 +13,4 @@ logging:
     root: INFO
     ma.tachycom: INFO
     org.hibernate.SQL: WARN
+
