@@ -1,0 +1,15 @@
+# Surcharges du profil production pour ms-client.
+# Ce fichier est charge en plus de ms-client.yml quand
+# SPRING_PROFILES_ACTIVE=prod.
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: false
+
+logging:
+  level:
+    root: INFO
+    ma.tachycom: INFO
+    org.hibernate.SQL: WARN
