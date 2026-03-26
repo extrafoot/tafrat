@@ -1,0 +1,23 @@
+# Surcharges de production pour ms-vehicule.
+# Le service reste branche sur PostgreSQL, Redis et ms-config,
+# mais avec quelques reglages plus stricts pour le profil prod.
+
+spring:
+  datasource:
+    hikari:
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:10}
+      minimum-idle: ${DB_POOL_MIN_IDLE:2}
+      connection-timeout: 30000
+
+  jpa:
+    show-sql: false
+
+management:
+  endpoint:
+    health:
+      show-details: never
+
+logging:
+  level:
+    org.springframework.web: INFO
+    org.hibernate.SQL: WARN
