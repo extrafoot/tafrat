@@ -2,29 +2,26 @@
 # Ce fichier doit etre lu par ms-config depuis le depot Git de configuration.
 
 server:
-  # Port HTTP du microservice.
   port: ${SERVER_PORT:8081}
-  # Permet a Spring de tenir compte des headers Forwarded/X-Forwarded-*
-  # envoyes par l'Ingress Kubernetes pour construire les bonnes URLs.
   forward-headers-strategy: framework
 
 spring:
+  application:
+    name: ms-client
+
   datasource:
-    # Connexion PostgreSQL principale de ms-client.
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:dbclient}
     username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:root}
+    password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
 
   sql:
     init:
-      # Joue le schema SQL embarque si necessaire.
       mode: always
       schema-locations: classpath:schema.sql
 
   jpa:
     hibernate:
-      # Mode pratique pour dev/demo : cree ou ajuste la table clients.
       ddl-auto: update
     open-in-view: false
     properties:
@@ -33,18 +30,23 @@ spring:
 
   data:
     redis:
-      # Redis partage entre les replicas / pods du microservice.
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
       timeout: 2s
 
   cache:
-    # Active Spring Cache avec Redis comme backend distribue.
     type: redis
     redis:
       cache-null-values: false
       use-key-prefix: true
       key-prefix: "ms-client::"
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8090/realms/tafrat}
+          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:8090/realms/tafrat/protocol/openid-connect/certs}
 
 management:
   endpoints:
@@ -57,7 +59,26 @@ management:
   health:
     probes:
       enabled: true
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
 
 logging:
   level:
+    root: INFO
+    ma.tachycom: INFO
     org.hibernate.SQL: INFO
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+
+app:
+  security:
+    keycloak:
+      client-id: ${KEYCLOAK_CLIENT_ID:ms-client}

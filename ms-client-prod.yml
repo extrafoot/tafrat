@@ -1,5 +1,4 @@
 # Surcharges de production pour ms-client.
-# Swagger est coupe pour ne pas exposer la documentation publiquement.
 
 springdoc:
   api-docs:

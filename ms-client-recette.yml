@@ -1,5 +1,4 @@
 # Surcharges de recette pour ms-client.
-# Swagger reste active, mais les logs reviennent a un niveau stable.
 
 springdoc:
   api-docs:

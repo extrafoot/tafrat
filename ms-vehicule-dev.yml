@@ -1,5 +1,4 @@
 # Surcharges de developpement pour ms-vehicule.
-# Active Swagger et des logs plus verbeux.
 
 springdoc:
   api-docs:
