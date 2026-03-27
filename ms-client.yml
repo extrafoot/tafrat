@@ -4,6 +4,9 @@
 server:
   # Port HTTP du microservice.
   port: ${SERVER_PORT:8081}
+  # Permet a Spring de tenir compte des headers Forwarded/X-Forwarded-*
+  # envoyes par l'Ingress Kubernetes pour construire les bonnes URLs.
+  forward-headers-strategy: framework
 
 spring:
   datasource:

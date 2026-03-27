@@ -1,0 +1,12 @@
+# Surcharges de developpement pour ms-vehicule.
+# Active Swagger et des logs plus verbeux.
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+logging:
+  level:
+    ma.tachycom: DEBUG

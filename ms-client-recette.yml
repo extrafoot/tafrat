@@ -1,0 +1,12 @@
+# Surcharges de recette pour ms-client.
+# Swagger reste active, mais les logs reviennent a un niveau stable.
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+logging:
+  level:
+    ma.tachycom: INFO

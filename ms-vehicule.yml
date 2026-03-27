@@ -3,6 +3,9 @@
 
 server:
   port: ${SERVER_PORT:8082}
+  # Permet a Spring de tenir compte des headers Forwarded/X-Forwarded-*
+  # envoyes par l'Ingress Kubernetes pour construire les bonnes URLs.
+  forward-headers-strategy: framework
 
 spring:
   application:
