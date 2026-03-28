@@ -1,11 +1,5 @@
-# Surcharges de production pour ms-vehicule.
-
 springdoc:
   api-docs:
     enabled: false
   swagger-ui:
     enabled: false
-
-logging:
-  level:
-    ma.tachycom: INFO
